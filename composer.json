@@ -1,0 +1,50 @@
+{
+    "name": "kundu/orgsignin",
+    "description": "Google Sign-In for Laravel with domain restrictions",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sauvik Kundu",
+            "email": "sauvik.kundu240@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0",
+        "google/apiclient": "^2.12.1",
+        "illuminate/support": "^10.0",
+        "illuminate/http": "^10.0",
+        "illuminate/routing": "^10.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "phpunit/phpunit": "^10.0",
+        "mockery/mockery": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourVendor\\OrgSignIn\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "YourVendor\\OrgSignIn\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kundu\\OrgSignIn\\Providers\\OrgSignInServiceProvider"
+            ],
+            "aliases": {
+                "OrgSignIn": "Kundu\\OrgSignIn\\Facades\\OrgSignIn"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+} 
