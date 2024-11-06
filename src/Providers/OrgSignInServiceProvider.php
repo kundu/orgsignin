@@ -1,10 +1,10 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Providers;
+namespace Kundu\OrgSignIn\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use YourVendor\OrgSignIn\OrgSignIn;
-use YourVendor\OrgSignIn\Services\OrgSignInService;
+use Kundu\OrgSignIn\OrgSignIn;
+use Kundu\OrgSignIn\Services\OrgSignInService;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Support\DeferrableProvider;
 

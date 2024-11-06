@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Http\Middleware;
+namespace Kundu\OrgSignIn\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

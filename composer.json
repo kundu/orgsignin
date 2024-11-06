@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "YourVendor\\OrgSignIn\\": "src/"
+            "Kundu\\OrgSignIn\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "YourVendor\\OrgSignIn\\Tests\\": "tests/"
+            "Kundu\\OrgSignIn\\Tests\\": "tests/"
         }
     },
     "extra": {

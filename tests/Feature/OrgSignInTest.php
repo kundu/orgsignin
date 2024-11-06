@@ -1,9 +1,9 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Tests\Feature;
+namespace Kundu\OrgSignIn\Tests\Feature;
 
-use YourVendor\OrgSignIn\Tests\TestCase;
-use YourVendor\OrgSignIn\Facades\OrgSignIn;
+use Kundu\OrgSignIn\Tests\TestCase;
+use Kundu\OrgSignIn\Facades\OrgSignIn;
 use Illuminate\Support\Facades\DB;
 use Mockery;
 use Google\Client as GoogleClient;

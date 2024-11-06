@@ -1,8 +1,8 @@
 <?php
 
-namespace YourVendor\OrgSignIn;
+namespace Kundu\OrgSignIn;
 
-use YourVendor\OrgSignIn\Services\OrgSignInService;
+use Kundu\OrgSignIn\Services\OrgSignInService;
 
 class OrgSignIn
 {

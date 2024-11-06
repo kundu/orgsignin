@@ -1,9 +1,9 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Tests;
+namespace Kundu\OrgSignIn\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use YourVendor\OrgSignIn\Providers\OrgSignInServiceProvider;
+use Kundu\OrgSignIn\Providers\OrgSignInServiceProvider;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;

@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Services;
+namespace Kundu\OrgSignIn\Services;
 
 use Exception;
 use Google\Client as GoogleClient;

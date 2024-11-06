@@ -1,12 +1,12 @@
 <?php
 
-namespace YourVendor\OrgSignIn\Http\Controllers;
+namespace Kundu\OrgSignIn\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Redirect;
-use YourVendor\OrgSignIn\Facades\OrgSignIn;
+use Kundu\OrgSignIn\Facades\OrgSignIn;
 
 class OrgSignInController extends Controller
 {
