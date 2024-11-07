@@ -5,10 +5,9 @@ namespace Kundu\OrgSignIn\Providers;
 use Illuminate\Support\ServiceProvider;
 use Kundu\OrgSignIn\OrgSignIn;
 use Kundu\OrgSignIn\Services\OrgSignInService;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\Facades\Route;
 
-class OrgSignInServiceProvider extends ServiceProvider implements DeferrableProvider
+class OrgSignInServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -17,17 +16,21 @@ class OrgSignInServiceProvider extends ServiceProvider implements DeferrableProv
             'orgsignin'
         );
 
-        $this->app->singleton(OrgSignIn::class, function (Container $app) {
+        $this->app->singleton('orgsignin', function ($app) {
             return new OrgSignIn(
                 $app->make(OrgSignInService::class)
             );
         });
-
-        $this->app->alias(OrgSignIn::class, 'orgsignin');
     }
 
     public function boot(): void
     {
+        // Register routes
+        $this->registerRoutes();
+
+        // Register views
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'orgsignin');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../config/orgsignin.php' => config_path('orgsignin.php'),
@@ -37,13 +40,15 @@ class OrgSignInServiceProvider extends ServiceProvider implements DeferrableProv
                 __DIR__ . '/../../resources/views' => resource_path('views/vendor/orgsignin'),
             ], 'orgsignin-views');
         }
-
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'orgsignin');
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
     }
 
-    public function provides(): array
+    protected function registerRoutes(): void
     {
-        return [OrgSignIn::class, 'orgsignin'];
+        Route::group([
+            'middleware' => ['web'],
+            'namespace' => 'Kundu\OrgSignIn\Http\Controllers',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        });
     }
 } 

@@ -6,14 +6,14 @@ use Exception;
 use Google\Client as GoogleClient;
 use Google\Service\Oauth2 as GoogleOauth2;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
 use stdClass;
 
 class OrgSignInService
 {
     protected GoogleClient $client;
+    protected string $userModel;
 
     public function __construct()
     {
@@ -23,6 +23,9 @@ class OrgSignInService
         $this->client->setRedirectUri(config('orgsignin.redirect_uri'));
         $this->client->addScope('email');
         $this->client->addScope('profile');
+        
+        // Get the user model from config
+        $this->userModel = config('orgsignin.user_model', \App\Models\User::class);
     }
 
     public function getAuthUrl(): string
@@ -73,7 +76,7 @@ class OrgSignInService
         return $domain === config('orgsignin.allowed_domain');
     }
 
-    protected function validateEmailVerification(stdClass $user): bool
+    protected function validateEmailVerification(Model $user): bool
     {
         if (!config('orgsignin.check_verified')) {
             return true;
@@ -82,10 +85,9 @@ class OrgSignInService
         return !is_null($user->email_verified_at);
     }
 
-    protected function findUser(string $email): ?stdClass
+    protected function findUser(string $email): ?Model
     {
-        return DB::table(config('orgsignin.user_table'))
-            ->where(config('orgsignin.email_column'), $email)
-            ->first();
+        $emailColumn = config('orgsignin.email_column', 'email');
+        return $this->userModel::where($emailColumn, $email)->first();
     }
 } 

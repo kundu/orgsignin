@@ -19,10 +19,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Database Configuration
+    | User Model Configuration
     |--------------------------------------------------------------------------
     */
-    'user_table' => env('ORG_SIGNIN_USER_TABLE', 'users'),
+    'user_model' => env('ORG_SIGNIN_USER_MODEL', \App\Models\User::class),
     'email_column' => env('ORG_SIGNIN_EMAIL_COLUMN', 'email'),
     'check_verified' => env('ORG_SIGNIN_CHECK_VERIFIED', true),
 
