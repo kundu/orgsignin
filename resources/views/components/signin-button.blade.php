@@ -6,7 +6,7 @@
         <path d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z" fill="#FBBC05"/>
         <path d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.8 4.8 0 0 1 4.48-3.31z" fill="#EA4335"/>
     </svg>
-    Sign in with Google
+    {{ env('SIGNIN_BUTTON_TEXT', 'Sign in with Google') }}
 </a>
 
 <style>

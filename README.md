@@ -1,69 +1,105 @@
-**Laravel Organization Google Sign-In Package Installation and Configuration Guide**
+### Laravel Organization Google Sign-In Package Guide
 
-**Prerequisites**
+#### Overview
 
-Before proceeding with the installation and configuration of the Laravel Organization Google Sign-In package, ensure that your environment meets the following requirements:
+This package provides a straightforward way to integrate Google Sign-In with domain restrictions into your Laravel application. It allows only users from a specific domain to authenticate using their Google accounts.
 
-* PHP version: ^8.1 or ^8.2
-* Laravel version: ^10.0 or ^11.0
-* Google API Client credentials
+#### Prerequisites
 
-**Installation**
+Ensure your environment meets the following requirements:
 
-To install the package, execute the following command in your terminal:
-```bash
-composer require kundu/orgsignin -W
+*   **PHP Version**: ^7.2 or ^8.2
+*   **Laravel Version**: ^8.0 or ^11.0
+*   **Google API Client Credentials**: Set up through Google Cloud Console
+
+---
+
+### Installation
+
+#### 1\. Install the Package
+
+To install the package, run the following command in your terminal:
+
+```xml
+composer require kundu/orgsignin
 ```
-**Publishing Configuration and Views**
 
-After installation, publish the configuration file using the following command:
-```bash
+#### 2\. Publish Configuration and Views
+
+After installation, publish the configuration file:
+
+```xml
 php artisan vendor:publish --tag="orgsignin-config"
 ```
-Optionally, publish the views with the following command:
-```bash
+
+Optionally, you can also publish the views:
+
+```xml
 php artisan vendor:publish --tag="orgsignin-views"
 ```
-**Environment Variables**
 
-Add the following environment variables to your `.env` file:
+---
 
-* `GOOGLE_CLIENT_ID`
-* `GOOGLE_CLIENT_SECRET`
-* `ORG_SIGNIN_ALLOWED_DOMAIN`
-* `ORG_SIGNIN_USER_TABLE`
-* `ORG_SIGNIN_EMAIL_COLUMN`
-* `ORG_SIGNIN_CHECK_VERIFIED`
-* `ORG_SIGNIN_REDIRECT_ROUTE`
+### Configuration
 
-**Google OAuth Credentials Configuration**
+#### 1\. Environment Variables
 
-Configure your Google OAuth credentials in the Google Cloud Console, ensuring that you have the correct redirect URI.
+Add the following variables to your `.env` file to configure Google Sign-In:
 
-**Integration with Laravel Application**
+```xml
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+ORG_SIGNIN_ALLOWED_DOMAIN=your-allowed-domain.com
+ORG_SIGNIN_USER_TABLE=users
+ORG_SIGNIN_EMAIL_COLUMN=email
+ORG_SIGNIN_CHECK_VERIFIED=true
+ORG_SIGNIN_REDIRECT_ROUTE=/home
+SIGNIN_BUTTON_TEXT="Sign in with Google"
+```
 
-In your Laravel application, include the sign-in button in your login view using the following code:
-```php
+#### 2\. Google OAuth Credentials
+
+Configure your Google OAuth credentials in the Google Cloud Console, making sure to set the correct redirect URI for your Laravel app.
+
+---
+
+### Integration
+
+#### 1\. Include the Sign-In Button
+
+To display the Google Sign-In button on your login view, add this line:
+
+```xml
 @include('orgsignin::components.signin-button')
 ```
-**Route Protection**
 
-Protect your routes by applying the `ValidateDomain` middleware to ensure that only users with the allowed domain can access them.
+#### 2\. Route Protection
 
-**Authentication Flow**
+Apply the `ValidateDomain` middleware to protect routes and allow access only to users with the specified email domain. For example:
 
-The package handles the authentication flow by:
+```php
+Route::middleware(['auth', ValidateDomain::class])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+    // Additional protected routes...
+});
+```
 
-1. Validating the user's email domain
-2. Checking if the user exists in your database
-3. Verifying the email if required
+---
 
-Upon successful authentication, users are redirected to the specified route; otherwise, they receive an error message.
+### Authentication Flow
 
-**Customization**
+This package handles the authentication flow as follows:
 
-Customize the views and configuration as needed to fit your application's requirements.
+1.  **Domain Validation**: Ensures the user’s email belongs to the allowed domain.
+2.  **User Verification**: Checks if the user exists in the database.
+3.  **Optional Email Verification**: Verifies the user’s email if required.
 
-**Support and Licensing**
+Upon successful authentication, users are redirected to the specified route (`ORG_SIGNIN_REDIRECT_ROUTE`); otherwise, an error message is displayed.
 
-If you encounter any issues or have security concerns, contact the package author. The package is licensed under the MIT License, allowing for free use and modification.
+---
+
+### Customization
+
+You can customize the views and configuration to fit your application. The text on the sign-in button can be changed using the `SIGNIN_BUTTON_TEXT` environment variable.
