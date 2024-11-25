@@ -49,7 +49,7 @@ Add the following variables to your `.env` file to configure Google Sign-In:
 ```xml
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
-ORG_SIGNIN_ALLOWED_DOMAIN=your-allowed-domain.com
+ORG_SIGNIN_ALLOWED_DOMAIN=your-allowed-domain.com,another-allowed-domain.com
 ORG_SIGNIN_USER_TABLE=users
 ORG_SIGNIN_EMAIL_COLUMN=email
 ORG_SIGNIN_CHECK_VERIFIED=true

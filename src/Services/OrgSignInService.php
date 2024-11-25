@@ -6,9 +6,7 @@ use Exception;
 use Google\Client as GoogleClient;
 use Google\Service\Oauth2 as GoogleOauth2;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Model;
-use stdClass;
 
 class OrgSignInService
 {
@@ -28,11 +26,22 @@ class OrgSignInService
         $this->userModel = config('orgsignin.user_model', \App\Models\User::class);
     }
 
+    /**
+     * Get the authentication URL
+     * 
+     * @return string
+     */
     public function getAuthUrl(): string
     {
         return $this->client->createAuthUrl();
     }
 
+    /**
+     * Handle the callback from Google
+     * 
+     * @param string $authCode
+     * @return array
+     */
     public function handleCallback(string $authCode): array
     {
         try {
@@ -70,12 +79,25 @@ class OrgSignInService
         }
     }
 
+    /**
+     * Validate the domain of the email
+     * 
+     * @param string $email
+     * @return bool
+     */
     protected function validateDomain(string $email): bool
     {
         $domain = explode('@', $email)[1];
-        return $domain === config('orgsignin.allowed_domain');
+        $allowedDomains = explode(',', config('orgsignin.allowed_domain'));
+        return in_array($domain, $allowedDomains, true);
     }
 
+    /**
+     * Validate the email verification status of the user
+     * 
+     * @param Model $user
+     * @return bool
+     */
     protected function validateEmailVerification(Model $user): bool
     {
         if (!config('orgsignin.check_verified')) {
@@ -85,6 +107,12 @@ class OrgSignInService
         return !is_null($user->email_verified_at);
     }
 
+    /**
+     * Find the user by email
+     * 
+     * @param string $email
+     * @return Model|null
+     */
     protected function findUser(string $email): ?Model
     {
         $emailColumn = config('orgsignin.email_column', 'email');
